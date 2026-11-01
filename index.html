@@ -16,8 +16,12 @@
     <!-- Header / Navigation -->
     <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="font-bold text-xl tracking-wider text-orange-400 flex items-center gap-2">
-                <span>夜明け団</span>
+            <a href="#" class="font-bold text-xl tracking-wider text-orange-400 flex items-center gap-3">
+                <!-- ロゴ画像 (images/logo.png を参照) -->
+                <div class="h-9 w-auto flex items-center justify-center relative">
+                    <img src="images/logo.png" alt="夜明け団 ロゴ" class="h-full w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                    <span style="display:none;" class="text-orange-400 font-bold">夜明け団</span>
+                </div>
                 <span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded-full font-normal">Minecraft Only</span>
             </a>
             <nav class="flex items-center gap-4 text-sm text-slate-400">
@@ -54,12 +58,12 @@
             </div>
         </section>
 
-        <!-- Archive Section (みんなで遊んだ記録。) - 動的取得 (エラー対策版) -->
+        <!-- Archive Section (みんなで遊んだ記録。) - 動的取得 -->
         <section id="archives" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
             <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-100 mb-2">みんなで遊んだ記録。</h2>
-                    <p class="text-sm text-slate-400">YouTubeチャンネルの最新のマインクラフト動画が自動で反映されます。</p>
+                    <p class="text-sm text-slate-400">YouTubeチャンネルに公開された最新のマインクラフト動画が自動で反映されます。</p>
                 </div>
                 <div id="loadingStatus" class="text-xs text-orange-400 animate-pulse font-mono">動画を読み込み中...</div>
             </div>
@@ -77,70 +81,76 @@
         <section id="roles" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
             <div class="mb-10 text-center">
                 <h2 class="text-2xl font-bold text-slate-100 mb-2">6人それぞれの役どころ</h2>
-                <p class="text-sm text-slate-400">それぞれの個性を活かした、メンバーの役割と立ち絵。</p>
+                <p class="text-sm text-slate-400">Twitch（<a href="https://m.twitch.tv/yoakedan/about" target="_blank" class="text-orange-400 underline">@yoakedan</a>）の情報をもとにしたメンバーの役割と立ち絵。</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- メンバー 1 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                
+                <!-- メンバー 1: ユーラ -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <!-- Twitch等の立ち絵画像URLを src に指定してください -->
-                        <img src="" alt="メンバー1 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/jura.png" alt="ユーラ" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 1</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">総合指揮・メイン建築</p>
-                    <p class="text-xs text-slate-400">ワールド全体の計画や中心的な建築を担当。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">ユーラ</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">ハイテンション担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">リーダー。テンション高めの全力プレイが特徴。大事なのはパッション。毎回濃ゆい爪痕を残していく。</p>
                 </div>
-                <!-- メンバー 2 -->
+
+                <!-- メンバー 2: かずまる -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <img src="" alt="メンバー2 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/kazumaru.png" alt="かずまる" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 2</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">自動装置・回路技師</p>
-                    <p class="text-xs text-slate-400">効率化のための全自動ファームや回路を構築。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">かずまる</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">おちゃらけ担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">サブリーダー、自称顔出しなしイケメン。静かに仕留めに来るいやらしい面あり。唯一の海外メンバーのため、会いたい人は国境を超える必要あり。</p>
                 </div>
-                <!-- メンバー 3 -->
+
+                <!-- メンバー 3: ろんた -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <img src="" alt="メンバー3 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/ronta.png" alt="ろんた" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 3</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">資源採掘・素材調達</p>
-                    <p class="text-xs text-slate-400">地下深くへ潜り、豊富な鉱物や素材を持ち帰る。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">ろんた</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">クール担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">最年少で誰よりもゲームセンスがある。基本、寡黙だが実はお笑い好き、エンジンかかればよく笑いよくしゃべる。</p>
                 </div>
-                <!-- メンバー 4 -->
+
+                <!-- メンバー 4: いつき -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <img src="" alt="メンバー4 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/itsuki.png" alt="いつき" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 4</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">農業・牧畜担当</p>
-                    <p class="text-xs text-slate-400">食料や動物の管理、農地の拡大を一手に行う。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">いつき</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">おもらし(?)担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">最年長でみんなの優しい兄貴。コマンド管理が得意で論理的ではあるが、過去のやらかし話は誰よりも黒歴史。</p>
                 </div>
-                <!-- メンバー 5 -->
+
+                <!-- メンバー 5: パン -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <img src="" alt="メンバー5 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/pang.png" alt="パン" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 5</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">装飾・インテリア</p>
-                    <p class="text-xs text-slate-400">細部のデザインや内装、景観の仕上げを担う。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">パン</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">天真爛漫担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">夜明け団唯一の癒し枠。ゆったりした話口調だが、たまに繰り出される一言にクリティカルダメージ並みの威力がある。</p>
                 </div>
-                <!-- メンバー 6 -->
+
+                <!-- メンバー 6: らい -->
                 <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
-                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
-                        <img src="" alt="メンバー6 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
-                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative shadow-inner">
+                        <img src="images/rai.png" alt="らい" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                        <span class="absolute text-xs text-slate-500 pointer-events-none">立ち絵</span>
                     </div>
-                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 6</h3>
-                    <p class="text-xs text-orange-400 font-mono mb-2">冒険・エリア探索</p>
-                    <p class="text-xs text-slate-400">ネザーや新エリアの開拓、地図の拡張で活躍。</p>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">らい</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">生意気担当</p>
+                    <p class="text-xs text-slate-400 leading-relaxed">ろんた同様最年少。コミュ強、エイム強、立ち回り強の3強を持ち合わせたメンバー1の色男。まだまだ才能を隠しており、今後の活躍に期待！！</p>
                 </div>
+
             </div>
         </section>
 
@@ -216,55 +226,40 @@
         </div>
     </footer>
 
-    <!-- JavaScript: YouTube RSS Direct Parser & Form Submission -->
+    <!-- JavaScript: YouTube RSS Dynamic Fetcher & Form Submission -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // ==========================================
-            // 1. YouTube最新動画の動的取得処理 (エラー対策・直接XMLパース)
+            // 1. YouTube最新動画の動的取得処理 (rss2json方式)
             // ==========================================
             const channelId = "UCvlcjTmdencEYsxY37xrD0A"; 
             const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-            // CORS制限を回避して安定取得するためのプロキシ経由URL
-            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
             const videoListContainer = document.getElementById('videoList');
             const loadingStatus = document.getElementById('loadingStatus');
 
-            fetch(proxyUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
-                .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+            fetch(apiUrl)
+                .then(response => response.json())
                 .then(data => {
-                    const entries = data.querySelectorAll("entry");
-                    if (entries.length > 0) {
+                    if (data.status === 'ok' && data.items.length > 0) {
                         loadingStatus.textContent = "最新情報を反映済み";
                         videoListContainer.innerHTML = ''; // プレースホルダーをクリア
 
                         // 最新から最大3件を取得して表示
-                        const count = Math.min(entries.length, 3);
-                        for (let i = 0; i < count; i++) {
-                            const entry = entries[i];
-                            const title = entry.querySelector("title").textContent;
-                            const link = entry.querySelector("link").getAttribute("href");
-                            
-                            // 動画IDの抽出
-                            const videoIdNode = entry.querySelector("videoId");
-                            let videoId = videoIdNode ? videoIdNode.textContent : "";
-                            if (!videoId && link.includes('v=')) {
-                                videoId = link.split('v=')[1].split('&')[0];
-                            }
-                            
-                            const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : "";
-                            const published = entry.querySelector("published").textContent;
-                            const pubDate = new Date(published).toLocaleDateString('ja-JP');
+                        const videos = data.items.slice(0, 3);
+
+                        videos.forEach(video => {
+                            // 動画IDの抽出とサムネイル生成
+                            const videoId = video.guid.split(':')[2] || video.link.split('v=')[1];
+                            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                            const pubDate = new Date(video.pubDate).toLocaleDateString('ja-JP');
 
                             const videoCard = `
-                                <a href="${link}" target="_blank" rel="noopener noreferrer" 
+                                <a href="${video.link}" target="_blank" rel="noopener noreferrer" 
                                    class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
                                     <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center flex-shrink-0">
-                                        ${thumbnailUrl ? `<img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` : `<span class="text-xs text-slate-500">No Image</span>`}
+                                        <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                     </div>
                                     <div class="flex-grow">
                                         <div class="flex items-center gap-2 mb-2">
@@ -272,23 +267,29 @@
                                             <span class="text-xs text-slate-500">${pubDate}</span>
                                         </div>
                                         <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mb-2 line-clamp-2">
-                                            ${title}
+                                            ${video.title}
                                         </h3>
                                         <p class="text-sm text-slate-400 line-clamp-2">夜明け団の最新マインクラフト活動記録。YouTubeで今すぐ視聴する。</p>
                                     </div>
                                 </a>
                             `;
                             videoListContainer.insertAdjacentHTML('beforeend', videoCard);
-                        }
+                        });
                     } else {
-                        loadingStatus.textContent = "動画が見つかりませんでした";
-                        videoListContainer.innerHTML = `<div class="text-center text-slate-500 text-sm py-4">動画データがありません。</div>`;
+                        loadingStatus.textContent = "取得エラー";
+                        videoListContainer.innerHTML = `
+                            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 text-center text-slate-400 text-sm">
+                                現在動画データを取得できません。YouTubeチャンネルをご確認ください。
+                            </div>`;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching YouTube RSS:', error);
-                    loadingStatus.textContent = "取得エラー";
-                    videoListContainer.innerHTML = `<div class="text-center text-rose-400 text-sm py-4">動画データの取得に失敗しました。</div>`;
+                    loadingStatus.textContent = "通信エラー";
+                    videoListContainer.innerHTML = `
+                        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 text-center text-slate-400 text-sm">
+                            ネットワークエラーが発生しました。<a href="https://youtube.com/@yoakedan" target="_blank" class="text-orange-400 underline">YouTubeチャンネルはこちら</a>
+                        </div>`;
                 });
         });
 
