@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yoakedan - Test Platform</title>
+    <title>夜明け団 - 公式サイト</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,112 +11,198 @@
         body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="font-bold text-xl tracking-wider bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Yoakedan
-            </div>
+    <!-- Header / Navigation -->
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="font-bold text-xl tracking-wider text-orange-400 flex items-center gap-2">
+                <span>夜明け団</span>
+                <span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded-full font-normal">Minecraft Only</span>
+            </a>
             <nav class="flex items-center gap-4 text-sm text-slate-400">
-                <a href="#about" class="hover:text-slate-200 transition-colors">About</a>
-                <a href="#features" class="hover:text-slate-200 transition-colors">Features</a>
-                <a href="#contact" class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-3.5 py-1.5 rounded-full hover:bg-indigo-600/30 transition-all">お問い合わせ</a>
+                <a href="#archives" class="hover:text-slate-200 transition-colors hidden sm:inline">記録</a>
+                <a href="#world" class="hover:text-slate-200 transition-colors hidden sm:inline">世界</a>
+                <a href="https://youtube.com/@yoakedan" target="_blank" rel="noopener noreferrer" class="bg-red-600/20 text-red-400 border border-red-500/30 px-3.5 py-1.5 rounded-full hover:bg-red-600/30 transition-all flex items-center gap-1.5">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    YouTube
+                </a>
             </nav>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="flex-grow">
+        
         <!-- Hero Section -->
-        <section class="max-w-5xl mx-auto px-6 py-20 text-center">
-            <div class="inline-flex items-center gap-2 bg-indigo-950/80 text-indigo-300 px-4 py-1.5 rounded-full text-xs font-medium border border-indigo-800/50 mb-6 shadow-inner">
-                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                Base44 Test Environment / Migrated to GitHub Pages
+        <section class="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
+            <div class="inline-flex items-center gap-2 bg-orange-950/50 text-orange-300 px-4 py-1.5 rounded-full text-xs font-medium border border-orange-800/40 mb-6">
+                <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                Official Minecraft Channel
             </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent leading-tight">
-                Yoakedan Test Platform
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-orange-400 via-amber-200 to-yellow-400 bg-clip-text text-transparent">
+                夜が明けるまで、マイクラで遊ぶ。
             </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto text-base md:text-lg mb-10 leading-relaxed">
-                このウェブサイトは、Base44で構築されたテスト環境をGitHub Pagesおよび独自ドメイン（<span class="text-indigo-300 font-mono">yoakedan.com</span>）で運用するために1ファイルへ最適化・統合されたものです。
+            <p class="text-slate-400 max-w-xl mx-auto text-base md:text-lg mb-10 leading-relaxed">
+                6人でひとつの世界を舞台に、自由気ままに建築や冒険、自動装置づくりを楽しむマインクラフト専門チャンネル。
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#contact" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-6 py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/25 active:scale-[0.98]">
-                    お問い合わせフォームへ
-                </a>
-                <a href="#features" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium px-6 py-3 rounded-xl transition-all">
-                    機能について
+            <div class="flex justify-center">
+                <a href="https://youtube.com/@yoakedan" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-500 text-white font-medium px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-red-600/25 flex items-center gap-2">
+                    チャンネル登録する
                 </a>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="max-w-5xl mx-auto px-6 py-16 border-t border-slate-900">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-200 mb-3">プラットフォームの特徴</h2>
-                <p class="text-slate-400 text-sm">セキュアで高速なサーバーレス運用を実現しています。</p>
+        <!-- Archive Section (みんなで遊んだ記録。) -->
+        <section id="archives" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-slate-100 mb-2">みんなで遊んだ記録。</h2>
+                <p class="text-sm text-slate-400">夜明け団のこれまでのマインクラフト活動の軌跡。</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 transition-all hover:border-slate-700">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 font-bold">01</div>
-                    <h3 class="font-bold text-slate-200 mb-2">1ファイル統合</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">HTML・CSS・JavaScriptを1つのファイルに集約しているため、管理やGitHub Pagesへのデプロイが非常に容易です。</p>
+            
+            <div class="grid gap-6">
+                <!-- Video Item 1 -->
+                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
+                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
+                        <span class="text-xs">Minecraft Thumbnail</span>
+                    </div>
+                    <div class="flex-grow">
+                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft</span>
+                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
+                            【Minecraft】第1回夜明け団マイクラ制限解除編
+                        </h3>
+                        <p class="text-sm text-slate-400">制限が解除されたワールドで、メンバーそれぞれが自由にやりたいことに挑む記念すべき第1回。</p>
+                    </div>
+                </a>
+
+                <!-- Video Item 2 -->
+                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
+                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
+                        <span class="text-xs">Minecraft Thumbnail</span>
+                    </div>
+                    <div class="flex-grow">
+                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft / 限定公開</span>
+                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
+                            「Hi, その道筋をたどるだけで十分さ」Day1【夜明け団】
+                        </h3>
+                        <p class="text-sm text-slate-400">新たな旅の始まり。それぞれの足跡を残す最初の1日目の記録。</p>
+                    </div>
+                </a>
+
+                <!-- Video Item 3 -->
+                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
+                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
+                        <span class="text-xs">Minecraft Thumbnail</span>
+                    </div>
+                    <div class="flex-grow">
+                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft</span>
+                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
+                            【みんなのマイクラ】全自動自動装置を作って村人増殖計画を進める団員たち
+                        </h3>
+                        <p class="text-sm text-slate-400">効率化を追求し、全自動装置の建造と村人増殖計画に奔走するメンバーたちの様子をお届け。</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Members / Places Section (6人、それぞれの暮らすところ。) -->
+        <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+            <div class="mb-10 text-center">
+                <h2 class="text-2xl font-bold text-slate-100 mb-2">6人、それぞれの暮らすところ。</h2>
+                <p class="text-sm text-slate-400">それぞれのこだわりが詰まった拠点や生活圏。</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">01</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 A</h3>
+                    <p class="text-xs text-slate-500 mt-1">開拓地エリア</p>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 transition-all hover:border-slate-700">
-                    <div class="w-10 h-10 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 font-bold">02</div>
-                    <h3 class="font-bold text-slate-200 mb-2">直接メール通知</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">専用のバックエンドサーバーなしで、フォーム送信内容を <code class="text-indigo-300">info@yoakedan.com</code> へ直接安全に送信します。</p>
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">02</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 B</h3>
+                    <p class="text-xs text-slate-500 mt-1">自動化プラント</p>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 transition-all hover:border-slate-700">
-                    <div class="w-10 h-10 rounded-xl bg-pink-600/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-4 font-bold">03</div>
-                    <h3 class="font-bold text-slate-200 mb-2">レスポンシブデザイン</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Tailwind CSSを採用し、スマートフォンからデスクトップまで美しくスムーズに表示されます。</p>
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">03</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 C</h3>
+                    <p class="text-xs text-slate-500 mt-1">山岳建築</p>
+                </div>
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">04</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 D</h3>
+                    <p class="text-xs text-slate-500 mt-1">地下要塞</p>
+                </div>
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">05</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 E</h3>
+                    <p class="text-xs text-slate-500 mt-1">牧場エリア</p>
+                </div>
+                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
+                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">06</div>
+                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 F</h3>
+                    <p class="text-xs text-slate-500 mt-1">シンボルタワー</p>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="max-w-3xl mx-auto px-6 py-16">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
-                <div class="absolute -right-20 -top-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <h2 class="text-2xl font-bold mb-2 text-slate-100">お問い合わせ</h2>
+        <!-- World Section (6人で、ひとつの世界。) -->
+        <section id="world" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+            <div class="bg-gradient-to-br from-orange-950/20 to-slate-900 border border-orange-900/30 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-4">6人で、ひとつの世界。</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-6">
+                    夜明け団は、6人のメンバーが同じワールドでそれぞれのスタイルを尊重し合いながら、ひとつの大きな世界を賑やかに作り上げていくマルチプレイチームです。
+                </p>
+            </div>
+        </section>
+
+        <!-- Next Schedule Section (次の予定は、もう少しだけ。) -->
+        <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center max-w-xl mx-auto">
+                <span class="text-xs uppercase tracking-widest text-orange-400 font-mono">Coming Soon</span>
+                <h3 class="text-xl font-bold text-slate-100 mt-2 mb-3">次の予定は、もう少しだけ。</h3>
+                <p class="text-sm text-slate-400">いまは、新しいマイクラ企画の準備中。続報をお待ちください。</p>
+            </div>
+        </section>
+
+        <!-- Contact Section (一緒に、何か作りませんか。) -->
+        <section class="max-w-3xl mx-auto px-6 py-16 border-t border-slate-900">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-2xl">
+                <h2 class="text-2xl font-bold mb-2 text-slate-100">一緒に、何か作りませんか。</h2>
                 <p class="text-sm text-slate-400 mb-8">
-                    ご質問やテストメッセージを入力してください。宛先（<span class="text-indigo-300 font-mono">info@yoakedan.com</span>）へ直接送信されます。
+                    コラボやメッセージはこちらからどうぞ。宛先（<span class="text-orange-300 font-mono">info@yoakedan.com</span>）へ直接送信されます。
                 </p>
 
                 <form id="contactForm" class="space-y-5">
                     <!-- 
                       【重要】Web3Formsのアクセスキーを設定してください。
-                      https://web3forms.com/ にアクセスし、info@yoakedan.com 宛てにキーを無料で取得して入力してください。
+                      https://web3forms.com/ にて info@yoakedan.com 宛ての無料キーを取得し、下部に貼り付けてください。
                     -->
-                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                    <input type="hidden" name="subject" value="【Yoakedan.com】新しいお問い合わせ">
+                    <input type="hidden" name="access_key" value="122b77a9-d431-4ca4-bc65-e17cf1fa1309">
+                    <input type="hidden" name="subject" value="【夜明け団.com】お問い合わせ">
 
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">お名前</label>
                         <input type="text" name="name" required 
-                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors"
+                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-orange-500 transition-colors"
                             placeholder="山田 太郎">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">メールアドレス</label>
                         <input type="email" name="email" required 
-                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors"
-                            placeholder="example@yoakedan.com">
+                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-orange-500 transition-colors"
+                            placeholder="example@domain.com">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">メッセージ</label>
                         <textarea name="message" rows="4" required 
-                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
-                            placeholder="テストメッセージを入力してください..."></textarea>
+                            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-orange-500 transition-colors resize-none"
+                            placeholder="メッセージを入力してください..."></textarea>
                     </div>
 
                     <button type="submit" id="submitButton"
-                        class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3.5 rounded-xl transition-all shadow-lg shadow-indigo-600/20 active:scale-[0.99]">
+                        class="w-full bg-orange-600 hover:bg-orange-500 text-white font-medium py-3.5 rounded-xl transition-all shadow-lg shadow-orange-600/20 active:scale-[0.99]">
                         送信する
                     </button>
 
@@ -128,9 +214,9 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-900 py-8 text-center text-xs text-slate-500">
-        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>&copy; 2026 Yoakedan. All rights reserved.</div>
-            <div class="text-slate-600 font-mono">Hosted on GitHub Pages / Custom Domain: yoakedan.com</div>
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="font-bold text-slate-400">夜明け団</div>
+            <div>&copy; 2026 夜明け団. All rights reserved.</div>
         </div>
     </footer>
 
@@ -147,7 +233,7 @@
             submitButton.textContent = "送信中...";
             formResult.classList.remove('hidden');
             formResult.textContent = "メッセージを送信しています...";
-            formResult.className = "text-center text-sm mt-3 text-indigo-400";
+            formResult.className = "text-center text-sm mt-3 text-orange-400";
 
             const formData = new FormData(form);
             const object = Object.fromEntries(formData);
