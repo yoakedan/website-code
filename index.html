@@ -53,55 +53,22 @@
             </div>
         </section>
 
-        <!-- Archive Section (みんなで遊んだ記録。) -->
+        <!-- Archive Section (みんなで遊んだ記録。) - 動的取得 -->
         <section id="archives" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
-            <div class="mb-10">
-                <h2 class="text-2xl font-bold text-slate-100 mb-2">みんなで遊んだ記録。</h2>
-                <p class="text-sm text-slate-400">夜明け団のこれまでのマインクラフト活動の軌跡。</p>
+            <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-100 mb-2">みんなで遊んだ記録。</h2>
+                    <p class="text-sm text-slate-400">YouTubeチャンネルの最新のマインクラフト動画が自動で反映されます。</p>
+                </div>
+                <div id="loadingStatus" class="text-xs text-orange-400 animate-pulse font-mono">動画を読み込み中...</div>
             </div>
             
-            <div class="grid gap-6">
-                <!-- Video Item 1 -->
-                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
-                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
-                        <span class="text-xs">Minecraft Thumbnail</span>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft</span>
-                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
-                            【Minecraft】第1回夜明け団マイクラ制限解除編
-                        </h3>
-                        <p class="text-sm text-slate-400">制限が解除されたワールドで、メンバーそれぞれが自由にやりたいことに挑む記念すべき第1回。</p>
-                    </div>
-                </a>
-
-                <!-- Video Item 2 -->
-                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
-                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
-                        <span class="text-xs">Minecraft Thumbnail</span>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft / 限定公開</span>
-                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
-                            「Hi, その道筋をたどるだけで十分さ」Day1【夜明け団】
-                        </h3>
-                        <p class="text-sm text-slate-400">新たな旅の始まり。それぞれの足跡を残す最初の1日目の記録。</p>
-                    </div>
-                </a>
-
-                <!-- Video Item 3 -->
-                <a href="https://youtube.com/@yoakedan" target="_blank" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
-                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center text-slate-600">
-                        <span class="text-xs">Minecraft Thumbnail</span>
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft</span>
-                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mt-2 mb-2">
-                            【みんなのマイクラ】全自動自動装置を作って村人増殖計画を進める団員たち
-                        </h3>
-                        <p class="text-sm text-slate-400">効率化を追求し、全自動装置の建造と村人増殖計画に奔走するメンバーたちの様子をお届け。</p>
-                    </div>
-                </a>
+            <!-- 動的に動画カードが挿入されるコンテナ -->
+            <div id="videoList" class="grid gap-6">
+                <!-- 初期ローディング用プレースホルダー -->
+                <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 text-center text-slate-500 text-sm">
+                    最新の動画情報を取得しています...
+                </div>
             </div>
         </section>
 
@@ -173,10 +140,7 @@
                 </p>
 
                 <form id="contactForm" class="space-y-5">
-                    <!-- 
-                      【重要】Web3Formsのアクセスキーを設定してください。
-                      https://web3forms.com/ にて info@yoakedan.com 宛ての無料キーを取得し、下部に貼り付けてください。
-                    -->
+                    <!-- Web3Forms Access Key (設定済み) -->
                     <input type="hidden" name="access_key" value="122b77a9-d431-4ca4-bc65-e17cf1fa1309">
                     <input type="hidden" name="subject" value="【夜明け団.com】お問い合わせ">
 
@@ -220,55 +184,113 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Form Submission -->
+    <!-- JavaScript: YouTube RSS Dynamic Fetcher & Form Submission -->
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // ==========================================
+            // 1. YouTube最新動画の動的取得処理 (設定済み)
+            // ==========================================
+            const channelId = "UCvlcjTmdencEYsxY37xrD0A"; 
+            
+            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            const videoListContainer = document.getElementById('videoList');
+            const loadingStatus = document.getElementById('loadingStatus');
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok' && data.items.length > 0) {
+                        loadingStatus.textContent = "最新情報を反映済み";
+                        videoListContainer.innerHTML = ''; // プレースホルダーをクリア
+
+                        // 最新から最大3件を取得して表示
+                        const videos = data.items.slice(0, 3);
+
+                        videos.forEach(video => {
+                            // 動画IDの抽出とサムネイル生成
+                            const videoId = video.guid.split(':')[2] || video.link.split('v=')[1];
+                            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                            const pubDate = new Date(video.pubDate).toLocaleDateString('ja-JP');
+
+                            const videoCard = `
+                                <a href="${video.link}" target="_blank" rel="noopener noreferrer" 
+                                   class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
+                                    <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center flex-shrink-0">
+                                        <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="text-xs font-mono text-orange-400 bg-orange-950/40 px-2.5 py-1 rounded-md border border-orange-800/30">Minecraft</span>
+                                            <span class="text-xs text-slate-500">${pubDate}</span>
+                                        </div>
+                                        <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mb-2 line-clamp-2">
+                                            ${video.title}
+                                        </h3>
+                                        <p class="text-sm text-slate-400 line-clamp-2">夜明け団の最新マインクラフト活動記録。YouTubeで今すぐ視聴する。</p>
+                                    </div>
+                                </a>
+                            `;
+                            videoListContainer.insertAdjacentHTML('beforeend', videoCard);
+                        });
+                    } else {
+                        loadingStatus.textContent = "取得エラー";
+                        videoListContainer.innerHTML = `<div class="text-center text-slate-500 text-sm py-4">動画データを取得できませんでした。</div>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching YouTube RSS:', error);
+                    loadingStatus.textContent = "通信エラー";
+                    videoListContainer.innerHTML = `<div class="text-center text-rose-400 text-sm py-4">ネットワークエラーが発生しました。</div>`;
+                });
+        });
+
+        // ==========================================
+        // 2. お問い合わせフォーム送信処理 (Web3Forms)
+        // ==========================================
         const form = document.getElementById('contactForm');
         const submitButton = document.getElementById('submitButton');
         const formResult = document.getElementById('formResult');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            submitButton.disabled = true;
-            submitButton.textContent = "送信中...";
-            formResult.classList.remove('hidden');
-            formResult.textContent = "メッセージを送信しています...";
-            formResult.className = "text-center text-sm mt-3 text-orange-400";
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitButton.disabled = true;
+                submitButton.textContent = "送信中...";
+                formResult.classList.remove('hidden');
+                formResult.textContent = "メッセージを送信しています...";
+                formResult.className = "text-center text-sm mt-3 text-orange-400";
 
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
+                const formData = new FormData(form);
+                const object = Object.fromEntries(formData);
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                let resJson = await response.json();
-                if (response.status === 200) {
-                    formResult.textContent = "お問い合わせが正常に送信されました！";
-                    formResult.className = "text-center text-sm mt-3 text-emerald-400";
-                    form.reset();
-                } else {
-                    console.error(resJson);
-                    formResult.textContent = resJson.message || "送信に失敗しました。時間をおいて再度お試しください。";
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(object)
+                })
+                .then(async (response) => {
+                    let resJson = await response.json();
+                    if (response.status === 200) {
+                        formResult.textContent = "お問い合わせが正常に送信されました！";
+                        formResult.className = "text-center text-sm mt-3 text-emerald-400";
+                        form.reset();
+                    } else {
+                        formResult.textContent = resJson.message || "送信に失敗しました。";
+                        formResult.className = "text-center text-sm mt-3 text-rose-400";
+                    }
+                })
+                .catch(() => {
+                    formResult.textContent = "ネットワークエラーが発生しました。";
                     formResult.className = "text-center text-sm mt-3 text-rose-400";
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                formResult.textContent = "ネットワークエラーが発生しました。接続を確認してください。";
-                formResult.className = "text-center text-sm mt-3 text-rose-400";
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = "送信する";
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "送信する";
+                });
             });
-        });
+        }
     </script>
 </body>
 </html>
