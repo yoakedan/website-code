@@ -295,7 +295,7 @@
             // 無料で取得したAPIキーを以下の "YOUR_YOUTUBE_API_KEY" の部分に貼り付けてください。
             const youtubeApiKey = "AIzaSyAT64wDNBIloqfWA-TuIR00ddshdNyn7-E"; 
 
-            if (youtubeApiKey && youtubeApiKey !== "AIzaSyAT64wDNBIloqfWA-TuIR00ddshdNyn7-E") {
+            if (youtubeApiKey && youtubeApiKey !== "YOUR_YOUTUBE_API_KEY") {
                 const channelApiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,brandingSettings&id=${channelId}&key=${youtubeApiKey}`;
                 
                 fetch(channelApiUrl)
