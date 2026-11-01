@@ -107,7 +107,7 @@
         <section id="roles" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
             <div class="mb-12 text-center">
                 <h2 class="text-2xl font-bold text-slate-100 mb-2">6人それぞれの役どころ</h2>
-                <p class="text-sm text-slate-400">Twitch（<a href="https://m.twitch.tv/yoakedan/about" target="_blank" class="text-rose-400 underline">@yoakedan</a>）の情報をもとにしたメンバーの役割と立ち絵。</p>
+                <p class="text-sm text-slate-400">全員がMinecraftを遊び尽くすメンバーです。</p>
             </div>
 
             <!-- 縦一列のメンバーリスト -->
@@ -116,7 +116,7 @@
                 <!-- ユーラ -->
                 <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 hover:border-slate-700 transition-all">
                     <div class="w-32 h-44 sm:w-40 sm:h-52 bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center relative shadow-inner">
-                        <img src="images/yura.png" alt="ユーラ" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <img src="images/jura.png" alt="ユーラ" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     </div>
                     <div class="flex-grow text-center sm:text-left">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
@@ -180,7 +180,7 @@
                 <!-- パン -->
                 <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 hover:border-slate-700 transition-all">
                     <div class="w-32 h-44 sm:w-40 sm:h-52 bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center relative shadow-inner">
-                        <img src="images/pan.png" alt="パン" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <img src="images/pang.png" alt="パン" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     </div>
                     <div class="flex-grow text-center sm:text-left">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
@@ -217,7 +217,7 @@
             <div class="bg-gradient-to-br from-rose-950/20 to-slate-900 border border-rose-900/30 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
                 <h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-4">6人で、ひとつの世界。</h2>
                 <p class="text-slate-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-6">
-                    夜明け団は、6人のメンバーが同じワールドでそれぞれのスタイルを尊重し合いながら、ひとつの大きな世界を賑やかに作り上げていくマルチプレイチームです。
+                    2021年8月に活動を開始した6人組のゲーム実況グループです。これまでFPSなど幅広いゲームを扱ってきましたが、今後はMinecraftに絞って動画を投稿していきます。現在は新体制への移行期間で、体制が整いしだい活動を再開します。
                 </p>
             </div>
         </section>
@@ -293,9 +293,9 @@
             // ==========================================
             // ※注意: YouTube Data API v3 キーが必要です。
             // 無料で取得したAPIキーを以下の "YOUR_YOUTUBE_API_KEY" の部分に貼り付けてください。
-            const youtubeApiKey = "YOUR_YOUTUBE_API_KEY"; 
+            const youtubeApiKey = "AIzaSyAT64wDNBIloqfWA-TuIR00ddshdNyn7-E"; 
 
-            if (youtubeApiKey && youtubeApiKey !== "YOUR_YOUTUBE_API_KEY") {
+            if (youtubeApiKey && youtubeApiKey !== "AIzaSyAT64wDNBIloqfWA-TuIR00ddshdNyn7-E") {
                 const channelApiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,brandingSettings&id=${channelId}&key=${youtubeApiKey}`;
                 
                 fetch(channelApiUrl)
@@ -340,7 +340,7 @@
                     if (data.status === 'ok' && data.items.length > 0) {
                         const minecraftVideos = data.items.filter(video => {
                             const title = video.title.toLowerCase();
-                            return title.includes('minecraft') || title.includes('マイクラ');
+                            return title.includes('Minecraft') || title.includes('マイクラ');
                         });
 
                         if (minecraftVideos.length > 0) {
