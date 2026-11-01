@@ -22,6 +22,7 @@
             </a>
             <nav class="flex items-center gap-4 text-sm text-slate-400">
                 <a href="#archives" class="hover:text-slate-200 transition-colors hidden sm:inline">記録</a>
+                <a href="#roles" class="hover:text-slate-200 transition-colors hidden sm:inline">役どころ</a>
                 <a href="#world" class="hover:text-slate-200 transition-colors hidden sm:inline">世界</a>
                 <a href="https://youtube.com/@yoakedan" target="_blank" rel="noopener noreferrer" class="bg-red-600/20 text-red-400 border border-red-500/30 px-3.5 py-1.5 rounded-full hover:bg-red-600/30 transition-all flex items-center gap-1.5">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -53,7 +54,7 @@
             </div>
         </section>
 
-        <!-- Archive Section (みんなで遊んだ記録。) - 動的取得 -->
+        <!-- Archive Section (みんなで遊んだ記録。) - 動的取得 (エラー対策版) -->
         <section id="archives" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
             <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
@@ -72,42 +73,73 @@
             </div>
         </section>
 
-        <!-- Members / Places Section (6人、それぞれの暮らすところ。) -->
-        <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+        <!-- Roles Section (6人それぞれの役どころ) -->
+        <section id="roles" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
             <div class="mb-10 text-center">
-                <h2 class="text-2xl font-bold text-slate-100 mb-2">6人、それぞれの暮らすところ。</h2>
-                <p class="text-sm text-slate-400">それぞれのこだわりが詰まった拠点や生活圏。</p>
+                <h2 class="text-2xl font-bold text-slate-100 mb-2">6人それぞれの役どころ</h2>
+                <p class="text-sm text-slate-400">それぞれの個性を活かした、メンバーの役割と立ち絵。</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">01</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 A</h3>
-                    <p class="text-xs text-slate-500 mt-1">開拓地エリア</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- メンバー 1 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <!-- Twitch等の立ち絵画像URLを src に指定してください -->
+                        <img src="" alt="メンバー1 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 1</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">総合指揮・メイン建築</p>
+                    <p class="text-xs text-slate-400">ワールド全体の計画や中心的な建築を担当。</p>
                 </div>
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">02</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 B</h3>
-                    <p class="text-xs text-slate-500 mt-1">自動化プラント</p>
+                <!-- メンバー 2 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <img src="" alt="メンバー2 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 2</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">自動装置・回路技師</p>
+                    <p class="text-xs text-slate-400">効率化のための全自動ファームや回路を構築。</p>
                 </div>
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">03</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 C</h3>
-                    <p class="text-xs text-slate-500 mt-1">山岳建築</p>
+                <!-- メンバー 3 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <img src="" alt="メンバー3 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 3</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">資源採掘・素材調達</p>
+                    <p class="text-xs text-slate-400">地下深くへ潜り、豊富な鉱物や素材を持ち帰る。</p>
                 </div>
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">04</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 D</h3>
-                    <p class="text-xs text-slate-500 mt-1">地下要塞</p>
+                <!-- メンバー 4 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <img src="" alt="メンバー4 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 4</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">農業・牧畜担当</p>
+                    <p class="text-xs text-slate-400">食料や動物の管理、農地の拡大を一手に行う。</p>
                 </div>
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">05</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 E</h3>
-                    <p class="text-xs text-slate-500 mt-1">牧場エリア</p>
+                <!-- メンバー 5 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <img src="" alt="メンバー5 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 5</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">装飾・インテリア</p>
+                    <p class="text-xs text-slate-400">細部のデザインや内装、景観の仕上げを担う。</p>
                 </div>
-                <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-5 text-center">
-                    <div class="w-12 h-12 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center text-orange-400 font-bold mb-3">06</div>
-                    <h3 class="font-bold text-slate-200 text-sm">メンバー拠点 F</h3>
-                    <p class="text-xs text-slate-500 mt-1">シンボルタワー</p>
+                <!-- メンバー 6 -->
+                <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 text-center flex flex-col items-center">
+                    <div class="w-24 h-24 mb-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden flex items-center justify-center relative">
+                        <img src="" alt="メンバー6 立ち絵" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden')">
+                        <span class="text-xs text-slate-500 absolute">立ち絵画像</span>
+                    </div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">メンバー 6</h3>
+                    <p class="text-xs text-orange-400 font-mono mb-2">冒険・エリア探索</p>
+                    <p class="text-xs text-slate-400">ネザーや新エリアの開拓、地図の拡張で活躍。</p>
                 </div>
             </div>
         </section>
@@ -184,41 +216,55 @@
         </div>
     </footer>
 
-    <!-- JavaScript: YouTube RSS Dynamic Fetcher & Form Submission -->
+    <!-- JavaScript: YouTube RSS Direct Parser & Form Submission -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // ==========================================
-            // 1. YouTube最新動画の動的取得処理 (設定済み)
+            // 1. YouTube最新動画の動的取得処理 (エラー対策・直接XMLパース)
             // ==========================================
             const channelId = "UCvlcjTmdencEYsxY37xrD0A"; 
-            
             const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+            // CORS制限を回避して安定取得するためのプロキシ経由URL
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
 
             const videoListContainer = document.getElementById('videoList');
             const loadingStatus = document.getElementById('loadingStatus');
 
-            fetch(apiUrl)
-                .then(response => response.json())
+            fetch(proxyUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
                 .then(data => {
-                    if (data.status === 'ok' && data.items.length > 0) {
+                    const entries = data.querySelectorAll("entry");
+                    if (entries.length > 0) {
                         loadingStatus.textContent = "最新情報を反映済み";
                         videoListContainer.innerHTML = ''; // プレースホルダーをクリア
 
                         // 最新から最大3件を取得して表示
-                        const videos = data.items.slice(0, 3);
-
-                        videos.forEach(video => {
-                            // 動画IDの抽出とサムネイル生成
-                            const videoId = video.guid.split(':')[2] || video.link.split('v=')[1];
-                            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                            const pubDate = new Date(video.pubDate).toLocaleDateString('ja-JP');
+                        const count = Math.min(entries.length, 3);
+                        for (let i = 0; i < count; i++) {
+                            const entry = entries[i];
+                            const title = entry.querySelector("title").textContent;
+                            const link = entry.querySelector("link").getAttribute("href");
+                            
+                            // 動画IDの抽出
+                            const videoIdNode = entry.querySelector("videoId");
+                            let videoId = videoIdNode ? videoIdNode.textContent : "";
+                            if (!videoId && link.includes('v=')) {
+                                videoId = link.split('v=')[1].split('&')[0];
+                            }
+                            
+                            const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : "";
+                            const published = entry.querySelector("published").textContent;
+                            const pubDate = new Date(published).toLocaleDateString('ja-JP');
 
                             const videoCard = `
-                                <a href="${video.link}" target="_blank" rel="noopener noreferrer" 
+                                <a href="${link}" target="_blank" rel="noopener noreferrer" 
                                    class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 hover:border-orange-500/50 transition-all flex flex-col md:flex-row gap-6 items-center group">
                                     <div class="w-full md:w-64 aspect-video bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800 flex items-center justify-center flex-shrink-0">
-                                        <img src="${thumbnailUrl}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                        ${thumbnailUrl ? `<img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` : `<span class="text-xs text-slate-500">No Image</span>`}
                                     </div>
                                     <div class="flex-grow">
                                         <div class="flex items-center gap-2 mb-2">
@@ -226,23 +272,23 @@
                                             <span class="text-xs text-slate-500">${pubDate}</span>
                                         </div>
                                         <h3 class="font-bold text-lg text-slate-200 group-hover:text-orange-300 transition-colors mb-2 line-clamp-2">
-                                            ${video.title}
+                                            ${title}
                                         </h3>
                                         <p class="text-sm text-slate-400 line-clamp-2">夜明け団の最新マインクラフト活動記録。YouTubeで今すぐ視聴する。</p>
                                     </div>
                                 </a>
                             `;
                             videoListContainer.insertAdjacentHTML('beforeend', videoCard);
-                        });
+                        }
                     } else {
-                        loadingStatus.textContent = "取得エラー";
-                        videoListContainer.innerHTML = `<div class="text-center text-slate-500 text-sm py-4">動画データを取得できませんでした。</div>`;
+                        loadingStatus.textContent = "動画が見つかりませんでした";
+                        videoListContainer.innerHTML = `<div class="text-center text-slate-500 text-sm py-4">動画データがありません。</div>`;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching YouTube RSS:', error);
-                    loadingStatus.textContent = "通信エラー";
-                    videoListContainer.innerHTML = `<div class="text-center text-rose-400 text-sm py-4">ネットワークエラーが発生しました。</div>`;
+                    loadingStatus.textContent = "取得エラー";
+                    videoListContainer.innerHTML = `<div class="text-center text-rose-400 text-sm py-4">動画データの取得に失敗しました。</div>`;
                 });
         });
 
