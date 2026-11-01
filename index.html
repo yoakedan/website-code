@@ -91,7 +91,7 @@
             <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-100 mb-2">みんなで遊んだ記録。</h2>
-                    <p class="text-sm text-slate-400">YouTubeチャンネルに公開された最新のマイクラ動画が自動で反映されます。</p>
+                    <p class="text-sm text-slate-400">夜明け団のマイクラに関する最新動画をご覧ください。</p>
                 </div>
                 <div id="loadingStatus" class="text-xs text-rose-400 animate-pulse font-mono">動画を読み込み中...</div>
             </div>
@@ -340,7 +340,7 @@
                     if (data.status === 'ok' && data.items.length > 0) {
                         const minecraftVideos = data.items.filter(video => {
                             const title = video.title.toLowerCase();
-                            return title.includes('Minecraft') || title.includes('マイクラ');
+                            return title.includes('Minecraft') || title.includes('マインクラフト') || title.includes('マイクラ');
                         });
 
                         if (minecraftVideos.length > 0) {
