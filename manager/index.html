@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夜明け団 サーバー管理パネル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+    <!-- ==================== ログイン画面 ==================== -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+            <div class="text-center mb-8">
+                <span class="text-xs font-mono text-rose-400 bg-rose-950/50 border border-rose-800/40 px-3 py-1 rounded-full">YOAKEDAN SERVER CONTROL</span>
+                <h1 class="text-2xl font-bold mt-4">サーバー管理ログイン</h1>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">メールアドレス</label>
+                    <input type="email" id="loginEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm focus:border-rose-500 focus:outline-none" placeholder="admin@yoakedan.com">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">パスワード</label>
+                    <input type="password" id="loginPassword" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm focus:border-rose-500 focus:outline-none">
+                </div>
+                <div id="loginError" class="text-xs text-rose-400 hidden"></div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-medium py-2.5 rounded-lg transition-all text-sm">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 初回パスワード強制変更モーダル ==================== -->
+    <div id="forceResetModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 w-full max-w-md">
+            <h2 class="text-xl font-bold text-rose-400 mb-2">初期パスワードの変更</h2>
+            <p class="text-xs text-slate-400 mb-6">セキュリティのため、新しいパスワードを設定してください。（英字大文字・小文字・記号を含む8文字以上）</p>
+            <form id="forceResetForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">新しいパスワード</label>
+                    <input type="password" id="forceNewPassword" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm">
+                </div>
+                <div id="forceResetError" class="text-xs text-rose-400 hidden"></div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-medium py-2.5 rounded-lg text-sm">パスワードを設定して進む</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== メイン管理ダッシュボード ==================== -->
+    <div id="dashboardScreen" class="hidden max-w-6xl mx-auto px-4 py-8">
+        <!-- ヘッダー -->
+        <header class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-900 mb-8">
+            <div>
+                <h1 class="text-xl font-bold flex items-center gap-3">
+                    夜明け団 Minecraft サーバー管理
+                    <span id="serverStatusBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono">確認中...</span>
+                </h1>
+                <p class="text-xs text-slate-500 mt-1">接続先アドレス: <span class="text-slate-300 font-mono">minecraft.yoakedan.com</span></p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="userInfoDisplay" class="text-xs text-slate-400"></span>
+                <button onclick="openAccountModal()" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-lg">アカウント設定</button>
+                <button onclick="logout()" class="text-xs text-rose-400 hover:underline">ログアウト</button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 左カラム：サーバー制御＆バックアップ -->
+            <div class="space-y-6">
+                <!-- 起動・停止コントロール -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                    <h2 class="text-sm font-bold text-slate-200 mb-4">サーバー起動構成</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">サーバー種類</label>
+                            <select id="serverTypeSelect" onchange="updateDropdowns()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm">
+                                <option value="vanilla">Vanilla サーバー</option>
+                                <option value="mod">Mod サーバー</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">バージョン選択</label>
+                            <select id="versionSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm"></select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">ワールドデータ選択</label>
+                            <select id="worldSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm"></select>
+                        </div>
+
+                        <div class="flex items-center gap-2 pt-1">
+                            <input type="checkbox" id="java8Checkbox" class="w-4 h-4 accent-rose-500 rounded">
+                            <label for="java8Checkbox" class="text-xs text-slate-300">Java 8 を使用する（未チェック時は JDK 25）</label>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-2">
+                            <button id="startBtn" onclick="startServer()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition-all">サーバー起動</button>
+                            <button id="stopBtn" onclick="stopServer()" class="bg-rose-600 hover:bg-rose-500 text-white font-medium py-2.5 rounded-lg text-sm transition-all">サーバー停止</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- バックアップコントロール -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                    <h2 class="text-sm font-bold text-slate-200 mb-2">ワールドデータバックアップ</h2>
+                    <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                        毎週月曜 02:00〜03:00 (GMT+8) は自動停止し、02:15 に <code class="text-slate-300">/Volumes/Backup/Minecraft/backup_worlddata/</code> へ自動圧縮保存されます。
+                    </p>
+                    <button onclick="triggerBackup()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-medium py-2.5 rounded-lg text-sm transition-all">
+                        今すぐバックアップ
+                    </button>
+                </div>
+
+                <!-- 操作監査ログ -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-sm font-bold text-slate-200">操作履歴（監査ログ）</h2>
+                        <button onclick="loadAuditLogs()" class="text-xs text-slate-400 hover:text-white">更新</button>
+                    </div>
+                    <div id="auditLogList" class="space-y-2 max-h-48 overflow-y-auto text-xs font-mono text-slate-400"></div>
+                </div>
+            </div>
+
+            <!-- 右カラム：リアルタイムターミナル（最大1000行常駐） -->
+            <div class="lg:col-span-2 bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex flex-col h-[680px]">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        サーバーターミナル（最大1000行保持）
+                    </h2>
+                    <span class="text-xs text-slate-500 font-mono">MacOS 26.2 Tahoe / -Xmx16G</span>
+                </div>
+
+                <!-- ログ出力画面 -->
+                <div id="terminalOutput" class="flex-grow bg-black border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-y-auto whitespace-pre-wrap leading-relaxed mb-3"></div>
+
+                <!-- コマンド入力フォーム -->
+                <form id="commandForm" class="flex gap-2">
+                    <input type="text" id="commandInput" placeholder="サーバーコマンドを入力 (例: say こんにちは / op ユーザー名)" class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-xs font-mono text-slate-100 focus:border-rose-500 focus:outline-none">
+                    <button type="submit" class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2.5 rounded-lg text-xs font-medium">送信</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== アカウント管理モーダル ==================== -->
+    <div id="accountModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">アカウント・パスワード設定</h2>
+                <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </div>
+
+            <!-- 自身のパスワード変更 -->
+            <div class="mb-6 pb-6 border-b border-slate-800">
+                <h3 class="text-sm font-bold text-slate-300 mb-2">自身のパスワード変更</h3>
+                <form id="selfPasswordForm" class="space-y-3">
+                    <input type="password" id="selfNewPassword" required placeholder="新しいパスワード（大文字・小文字・記号含む8文字以上）" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                    <button type="submit" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-lg text-xs">パスワードを変更</button>
+                </form>
+            </div>
+
+            <!-- 管理者専用セクション -->
+            <div id="adminOnlySection" class="hidden space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-amber-400 mb-2">【管理者専用】新規ユーザー追加</h3>
+                    <form id="addUserForm" class="space-y-2">
+                        <input type="text" id="newUsername" required placeholder="ユーザー名" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <input type="email" id="newUserEmail" required placeholder="メールアドレス" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <input type="password" id="newUserInitPw" required placeholder="初期パスワード（大文字・小文字・記号含む8文字以上）" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs">ユーザーを追加</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold text-amber-400 mb-2">【管理者専用】全アカウントのパスワードリセット</h3>
+                    <form id="adminResetForm" class="space-y-2">
+                        <select id="resetTargetUserSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs"></select>
+                        <input type="password" id="adminResetNewPw" required placeholder="リセット後の新しいパスワード" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <button type="submit" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg text-xs">対象パスワードを強制リセット</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // バックエンドAPIのベースURL（Cloudflare Tunnelで公開したURLを指定）
+        const API_BASE = "https://api.yoakedan.com";
+        const WS_BASE = "wss://api.yoakedan.com";
+
+        let authToken = localStorage.getItem("yoakedan_token");
+        let currentUser = JSON.parse(localStorage.getItem("yoakedan_user") || "null");
+        let availableOptions = null;
+        let ws = null;
+
+        // 初期表示判定
+        if (authToken && currentUser) {
+            if (currentUser.must_reset_password) {
+                showForceReset();
+            } else {
+                initDashboard();
+            }
+        }
+
+        // ログイン処理
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            const errEl = document.getElementById("loginError");
+            errEl.classList.add("hidden");
+
+            try {
+                const res = await fetch(`${API_BASE}/api/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || "ログイン失敗");
+
+                authToken = data.token;
+                currentUser = data;
+                localStorage.setItem("yoakedan_token", authToken);
+                localStorage.setItem("yoakedan_user", JSON.stringify(currentUser));
+
+                if (data.must_reset_password) {
+                    showForceReset();
+                } else {
+                    initDashboard();
+                }
+            } catch (err) {
+                errEl.textContent = err.message;
+                errEl.classList.remove("hidden");
+            }
+        });
+
+        function showForceReset() {
+            document.getElementById("loginScreen").classList.add("hidden");
+            document.getElementById("forceResetModal").classList.remove("hidden");
+            document.getElementById("forceResetModal").classList.add("flex");
+        }
+
+        document.getElementById("forceResetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const new_password = document.getElementById("forceNewPassword").value;
+            const errEl = document.getElementById("forceResetError");
+            try {
+                const res = await fetch(`${API_BASE}/api/change-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                    body: JSON.stringify({ new_password })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail);
+
+                currentUser.must_reset_password = false;
+                localStorage.setItem("yoakedan_user", JSON.stringify(currentUser));
+                document.getElementById("forceResetModal").classList.add("hidden");
+                initDashboard();
+            } catch (err) {
+                errEl.textContent = err.message;
+                errEl.classList.remove("hidden");
+            }
+        });
+
+        async function initDashboard() {
+            document.getElementById("loginScreen").classList.add("hidden");
+            document.getElementById("dashboardScreen").classList.remove("hidden");
+            document.getElementById("userInfoDisplay").textContent = `${currentUser.username} (${currentUser.email})`;
+
+            if (currentUser.is_admin) {
+                document.getElementById("adminOnlySection").classList.remove("hidden");
+            }
+
+            await loadOptions();
+            await loadAuditLogs();
+            connectTerminalWS();
+            setInterval(loadOptions, 10000);
+        }
+
+        async function loadOptions() {
+            const res = await fetch(`${API_BASE}/api/options`, {
+                headers: { "Authorization": `Bearer ${authToken}` }
+            });
+            if (res.status === 401) return logout();
+            const data = await res.json();
+            
+            const firstLoad = !availableOptions;
+            availableOptions = data;
+
+            // ステータスバッジ更新
+            const badge = document.getElementById("serverStatusBadge");
+            if (data.maintenance_active) {
+                badge.textContent = "メンテナンス中 (停止)";
+                badge.className = "text-xs px-2.5 py-0.5 rounded-full bg-amber-950 text-amber-400 border border-amber-800 font-mono";
+            } else if (data.server_running) {
+                badge.textContent = `稼働中 (${data.current_server_type.toUpperCase()})`;
+                badge.className = "text-xs px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono";
+            } else {
+                badge.textContent = "停止中";
+                badge.className = "text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono";
+            }
+
+            // 初回ロード時のみ直前の起動設定をプルダウンへ自動反映
+            if (firstLoad) {
+                document.getElementById("serverTypeSelect").value = data.last_selection.server_type;
+                document.getElementById("java8Checkbox").checked = data.last_selection.use_java8;
+                updateDropdowns(data.last_selection.version, data.last_selection.world);
+            }
+        }
+
+        function updateDropdowns(preselectVer = null, preselectWorld = null) {
+            if (!availableOptions) return;
+            const type = document.getElementById("serverTypeSelect").value;
+            const verSelect = document.getElementById("versionSelect");
+            const worldSelect = document.getElementById("worldSelect");
+
+            verSelect.innerHTML = availableOptions.versions[type].map(v => `<option value="${v}">${v}</option>`).join("");
+            worldSelect.innerHTML = availableOptions.worlds[type].map(w => `<option value="${w}">${w}</option>`).join("");
+
+            if (preselectVer && availableOptions.versions[type].includes(preselectVer)) {
+                verSelect.value = preselectVer;
+            }
+            if (preselectWorld && availableOptions.worlds[type].includes(preselectWorld)) {
+                worldSelect.value = preselectWorld;
+            }
+        }
+
+        function connectTerminalWS() {
+            const termEl = document.getElementById("terminalOutput");
+            termEl.innerHTML = "";
+            ws = new WebSocket(`${WS_BASE}/ws/terminal?token=${authToken}`);
+            ws.onmessage = (event) => {
+                termEl.textContent += event.data + "\n";
+                termEl.scrollTop = termEl.scrollHeight;
+            };
+            ws.onclose = () => {
+                setTimeout(connectTerminalWS, 3000);
+            };
+        }
+
+        async function startServer() {
+            const payload = {
+                server_type: document.getElementById("serverTypeSelect").value,
+                version: document.getElementById("versionSelect").value,
+                world: document.getElementById("worldSelect").value,
+                use_java8: document.getElementById("java8Checkbox").checked
+            };
+            const res = await fetch(`${API_BASE}/api/server/start`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (!res.ok) alert(data.detail);
+            loadOptions();
+            loadAuditLogs();
+        }
+
+        async function stopServer() {
+            if (!confirm("サーバーを停止しますか？")) return;
+            await fetch(`${API_BASE}/api/server/stop`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${authToken}` }
+            });
+            loadOptions();
+            loadAuditLogs();
+        }
+
+        async function triggerBackup() {
+            if (!confirm("今すぐワールドデータのバックアップを開始しますか？")) return;
+            await fetch(`${API_BASE}/api/backup/now`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${authToken}` }
+            });
+            loadAuditLogs();
+        }
+
+        document.getElementById("commandForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const input = document.getElementById("commandInput");
+            const command = input.value;
+            if (!command) return;
+            input.value = "";
+            await fetch(`${API_BASE}/api/server/command`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify({ command })
+            });
+        });
+
+        async function loadAuditLogs() {
+            const res = await fetch(`${API_BASE}/api/audit-logs`, {
+                headers: { "Authorization": `Bearer ${authToken}` }
+            });
+            const logs = await res.json();
+            document.getElementById("auditLogList").innerHTML = logs.map(l => 
+                `<div class="border-b border-slate-800/60 pb-1">
+                    <span class="text-slate-500">${l.timestamp}</span> <span class="text-rose-400">${l.user_email}</span><br>
+                    <span class="text-slate-300">[${l.action}] ${l.details}</span>
+                </div>`
+            ).join("");
+        }
+
+        // モーダル・ユーザー管理処理
+        async function openAccountModal() {
+            document.getElementById("accountModal").classList.remove("hidden");
+            document.getElementById("accountModal").classList.add("flex");
+            if (currentUser.is_admin) {
+                const res = await fetch(`${API_BASE}/api/users`, { headers: { "Authorization": `Bearer ${authToken}` } });
+                const users = await res.json();
+                document.getElementById("resetTargetUserSelect").innerHTML = users.map(u => 
+                    `<option value="${u.email}">${u.username} (${u.email})</option>`
+                ).join("");
+            }
+        }
+
+        function closeAccountModal() {
+            document.getElementById("accountModal").classList.add("hidden");
+        }
+
+        document.getElementById("selfPasswordForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const new_password = document.getElementById("selfNewPassword").value;
+            const res = await fetch(`${API_BASE}/api/change-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify({ new_password })
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) document.getElementById("selfNewPassword").value = "";
+        });
+
+        document.getElementById("addUserForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const payload = {
+                username: document.getElementById("newUsername").value,
+                email: document.getElementById("newUserEmail").value,
+                initial_password: document.getElementById("newUserInitPw").value
+            };
+            const res = await fetch(`${API_BASE}/api/users/add`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) {
+                e.target.reset();
+                openAccountModal();
+            }
+        });
+
+        document.getElementById("adminResetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const payload = {
+                target_email: document.getElementById("resetTargetUserSelect").value,
+                new_password: document.getElementById("adminResetNewPw").value
+            };
+            const res = await fetch(`${API_BASE}/api/users/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) e.target.reset();
+        });
+
+        function logout() {
+            localStorage.removeItem("yoakedan_token");
+            localStorage.removeItem("yoakedan_user");
+            location.reload();
+        }
+    </script>
+</body>
+</html>
