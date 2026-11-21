@@ -574,29 +574,46 @@
     </div>
   </div>
 
-  <!-- パスワード変更モーダル -->
-  <div class="modal-backdrop" id="pw-modal">
-    <div class="modal-card" style="max-width: 420px;">
-      <div class="modal-header">
-        <div>
-          <h3>パスワード変更</h3>
-          <div class="modal-subtitle">8文字以上・英大文字・英小文字・記号を各1文字以上含めてください</div>
+    <!-- ==================== アカウント管理モーダル ==================== -->
+    <div id="accountModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 px-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">アカウント・パスワード設定</h2>
+                <button onclick="closeAccountModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </div>
+
+            <!-- 自身のパスワード変更 -->
+            <div class="mb-6 pb-6 border-b border-slate-800">
+                <h3 class="text-sm font-bold text-slate-300 mb-2">自身のパスワード変更</h3>
+                <form id="selfPasswordForm" class="space-y-3">
+                    <input type="password" id="selfNewPassword" required placeholder="新しいパスワード（大文字・小文字・記号含む8文字以上）" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                    <button type="submit" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-lg text-xs">パスワードを変更</button>
+                </form>
+            </div>
+
+            <!-- 管理者専用セクション -->
+            <div id="adminOnlySection" class="hidden space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-amber-400 mb-2">【管理者専用】新規ユーザー追加</h3>
+                    <form id="addUserForm" class="space-y-2">
+                        <input type="text" id="newUsername" required placeholder="ユーザー名" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <input type="email" id="newUserEmail" required placeholder="メールアドレス" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <input type="password" id="newUserInitPw" required placeholder="初期パスワード（大文字・小文字・記号含む8文字以上）" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs">ユーザーを追加</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold text-amber-400 mb-2">【管理者専用】全アカウントのパスワードリセット</h3>
+                    <form id="adminResetForm" class="space-y-2">
+                        <select id="resetTargetUserSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs"></select>
+                        <input type="password" id="adminResetNewPw" required placeholder="リセット後の新しいパスワード" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs">
+                        <button type="submit" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg text-xs">対象パスワードを強制リセット</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <button type="button" class="modal-close" id="close-pw-modal-btn" aria-label="閉じる">×</button>
-      </div>
-      <form id="pw-form">
-        <div class="form-group">
-          <label class="field-label" for="new-password-input">新しいパスワード</label>
-          <input type="password" id="new-password-input" required />
-        </div>
-        <div class="error-text" id="pw-error"></div>
-        <div class="modal-actions" style="justify-content: flex-end; margin-top: 12px;">
-          <button type="button" class="btn-secondary" id="cancel-pw-modal-btn">キャンセル</button>
-          <button type="submit" class="btn-primary">変更する</button>
-        </div>
-      </form>
     </div>
-  </div>
 
   <script>
     (() => {
@@ -1069,42 +1086,77 @@
       cancelModModalBtn.addEventListener("click", closeModManager);
 
       // ==========================================
-      // パスワード変更モーダル処理
-      // ==========================================
-      openPwModalBtn.addEventListener("click", () => {
-        pwError.textContent = "";
-        newPasswordInput.value = "";
-        pwModal.classList.add("open");
-      });
-
-      function closePwModal() {
-        pwModal.classList.remove("open");
-      }
-
-      closePwModalBtn.addEventListener("click", closePwModal);
-      cancelPwModalBtn.addEventListener("click", closePwModal);
-
-      pwForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        pwError.textContent = "";
-        try {
-          const res = await fetch(`${API_BASE}/api/change-password`, {
-            method: "POST",
-            headers: apiHeaders(true),
-            body: JSON.stringify({ new_password: newPasswordInput.value })
-          });
-          const data = await res.json();
-          if (!res.ok) {
-            pwError.textContent = data.detail || "変更に失敗しました。";
-            return;
-          }
-          closePwModal();
-          await loadAuditLogs();
-          alert("パスワードを変更しました。");
-        } catch (err) {
-          pwError.textContent = `通信エラー: ${err.message}`;
+      // モーダル・ユーザー管理処理
+        async function openAccountModal() {
+            document.getElementById("accountModal").classList.remove("hidden");
+            document.getElementById("accountModal").classList.add("flex");
+            if (currentUser.is_admin) {
+                const res = await fetch(`${API_BASE}/api/users`, { headers: { "Authorization": `Bearer ${authToken}` } });
+                const users = await res.json();
+                document.getElementById("resetTargetUserSelect").innerHTML = users.map(u => 
+                    `<option value="${u.email}">${u.username} (${u.email})</option>`
+                ).join("");
+            }
         }
-      });
+
+        function closeAccountModal() {
+            document.getElementById("accountModal").classList.add("hidden");
+        }
+
+        document.getElementById("selfPasswordForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const new_password = document.getElementById("selfNewPassword").value;
+            const res = await fetch(`${API_BASE}/api/change-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify({ new_password })
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) document.getElementById("selfNewPassword").value = "";
+        });
+
+        document.getElementById("addUserForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const payload = {
+                username: document.getElementById("newUsername").value,
+                email: document.getElementById("newUserEmail").value,
+                initial_password: document.getElementById("newUserInitPw").value
+            };
+            const res = await fetch(`${API_BASE}/api/users/add`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) {
+                e.target.reset();
+                openAccountModal();
+            }
+        });
+
+        document.getElementById("adminResetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const payload = {
+                target_email: document.getElementById("resetTargetUserSelect").value,
+                new_password: document.getElementById("adminResetNewPw").value
+            };
+            const res = await fetch(`${API_BASE}/api/users/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            alert(res.ok ? data.message : data.detail);
+            if (res.ok) e.target.reset();
+        });
+
+        function logout() {
+            localStorage.removeItem("yoakedan_token");
+            localStorage.removeItem("yoakedan_user");
+            location.reload();
+        });
 
       // 初期起動時のセッション復元
       if (authToken) {
